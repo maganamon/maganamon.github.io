@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>SerDes Lab 2 | Rodolfo Magana</title>
+
+
+    <style>
+
+/* =========================================================
+           COLORS
+           ========================================================= */
+
+        :root {
+
+            /* Main page background */
+            --background: #e4e4e4;
+
+            /* Slightly lighter sidebar */
+            --sidebar-background: #e9e9e9;
+
+            /* Cards and buttons */
+            --card-background: #f2f2f2;
+            --card-hover: #f8f8f8;
+
+            /* Main text */
+            --text-main: #111111;
+
+            /* Paragraph / secondary text */
+            --text-secondary: #383838;
+
+            /* Muted text */
+            --text-muted: #666666;
+
+            /* Blue inspired by the lightning bolt */
+            --accent: #5f8bea;
+
+            /* Slightly darker blue for hover */
+            --accent-hover: #4978df;
+
+            /* Borders */
+            --border: #d0d0d0;
+
+            /* Soft shadow */
+            --shadow: rgba(0, 0, 0, 0.12);
+        }
+
+
+
+        /* =========================================================
+           GLOBAL
+           ========================================================= */
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+            margin: 0;
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            background-color: var(--background);
+
+            color: var(--text-main);
+        }
+
+
+        a {
+            text-decoration: none;
+        }
+
+
+
+        /* =========================================================
+           PERMANENT LEFT PROJECT SIDEBAR
+           ========================================================= */
+
+        .project-sidebar {
+
+            position: fixed;
+
+            top: 0;
+            left: 0;
+
+            width: 270px;
+            height: 100vh;
+
+            padding: 60px 30px;
+
+            background-color: var(--sidebar-background);
+
+            border-right: 1px solid var(--border);
+
+            overflow-y: auto;
+        }
+
+
+        .project-sidebar h2 {
+
+            font-size: 36px;
+
+            margin-top: 0;
+            margin-bottom: 30px;
+
+            color: var(--accent);
+        }
+
+
+
+        /* =========================================================
+           PROJECT BUTTONS
+           ========================================================= */
+
+        .project-buttons {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 16px;
+        }
+
+
+        .project-button {
+
+            display: block;
+
+            width: 100%;
+
+            padding: 18px 18px;
+
+            background-color: var(--card-background);
+
+            color: var(--text-main);
+
+            border: 1px solid var(--border);
+
+            border-radius: 7px;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            box-shadow: 0 2px 4px var(--shadow);
+
+            transition:
+                background-color 0.20s ease,
+                color 0.20s ease,
+                border-color 0.20s ease,
+                transform 0.20s ease,
+                box-shadow 0.20s ease;
+        }
+
+
+        .project-button:hover {
+
+            background-color: var(--accent);
+
+            color: white;
+
+            border-color: var(--accent);
+
+            transform: translateX(6px);
+
+            box-shadow: 0 4px 9px var(--shadow);
+        }
+
+
+
+        /* =========================================================
+           MAIN CONTENT
+           ========================================================= */
+
+        .main-content {
+
+            margin-left: 270px;
+        }
+
+
+
+        /* =========================================================
+           FRONT PAGE
+           ========================================================= */
+
+        .hero {
+
+            min-height: 100vh;
+
+            max-width: 1100px;
+
+            margin: auto;
+
+            padding: 60px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+        }
+
+
+        .hero h1 {
+
+            font-size: 68px;
+
+            margin-top: 0;
+            margin-bottom: 10px;
+
+            color: var(--accent);
+        }
+
+
+        .hero h2 {
+
+            font-size: 29px;
+
+            font-weight: normal;
+
+            color: var(--text-secondary);
+
+            margin-top: 0;
+            margin-bottom: 35px;
+        }
+
+
+        .hero p {
+
+            max-width: 800px;
+
+            font-size: 20px;
+
+            line-height: 1.7;
+
+            margin-bottom: 35px;
+
+            color: var(--text-secondary);
+        }
+
+
+
+        /* =========================================================
+           GITHUB / LINKEDIN / YOUTUBE BUTTONS
+           ========================================================= */
+
+        .hero-links {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 16px;
+        }
+
+
+        .hero-button {
+
+            display: inline-block;
+
+            padding: 14px 24px;
+
+            background-color: var(--card-background);
+
+            color: var(--accent);
+
+            border: 1px solid var(--border);
+
+            border-radius: 7px;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            box-shadow: 0 2px 4px var(--shadow);
+
+            transition:
+                background-color 0.20s ease,
+                color 0.20s ease,
+                border-color 0.20s ease,
+                transform 0.20s ease,
+                box-shadow 0.20s ease;
+        }
+
+
+        .hero-button:hover {
+
+            background-color: var(--accent);
+
+            color: white;
+
+            border-color: var(--accent);
+
+            transform: translateY(-3px);
+
+            box-shadow: 0 5px 10px var(--shadow);
+        }
+
+
+
+        /* =========================================================
+           FEATURED PROJECTS
+           ========================================================= */
+
+        .featured-projects {
+
+            max-width: 1100px;
+
+            margin: auto;
+
+            padding: 80px 60px 120px 60px;
+        }
+
+
+        .featured-projects h2 {
+
+            font-size: 44px;
+
+            margin-top: 0;
+            margin-bottom: 40px;
+
+            color: var(--accent);
+        }
+
+
+
+        /* =========================================================
+           PROJECT CARDS
+           ========================================================= */
+
+        .project-card {
+
+            background-color: var(--card-background);
+
+            border: 1px solid var(--border);
+
+            border-radius: 10px;
+
+            padding: 32px;
+
+            margin-bottom: 30px;
+
+            box-shadow: 0 2px 5px var(--shadow);
+
+            transition:
+                transform 0.20s ease,
+                box-shadow 0.20s ease,
+                border-color 0.20s ease,
+                background-color 0.20s ease;
+        }
+
+
+        .project-card:hover {
+
+            transform: translateY(-3px);
+
+            background-color: var(--card-hover);
+
+            border-color: #bcbcbc;
+
+            box-shadow: 0 5px 12px var(--shadow);
+        }
+
+
+        .project-card h3 {
+
+            font-size: 28px;
+
+            margin-top: 0;
+            margin-bottom: 15px;
+
+            color: var(--accent);
+        }
+
+
+        .project-card p {
+
+            max-width: 800px;
+
+            font-size: 17px;
+
+            line-height: 1.6;
+
+            color: var(--text-secondary);
+        }
+
+
+        .technologies {
+
+            color: var(--text-muted);
+
+            font-size: 15px;
+
+            font-weight: bold;
+        }
+
+
+        .explore-link {
+
+            display: inline-block;
+
+            margin-top: 10px;
+
+            color: var(--accent);
+
+            font-weight: bold;
+
+            transition:
+                color 0.20s ease,
+                transform 0.20s ease;
+        }
+
+
+        .explore-link:hover {
+
+            color: var(--accent-hover);
+
+            transform: translateX(4px);
+        }
+
+
+
+        /* =========================================================
+           MOBILE
+           ========================================================= */
+
+        @media (max-width: 850px) {
+
+
+            .project-sidebar {
+
+                position: relative;
+
+                width: 100%;
+
+                height: auto;
+
+                padding: 30px;
+
+                border-right: none;
+
+                border-bottom: 1px solid var(--border);
+            }
+
+
+            .project-buttons {
+
+                display: grid;
+
+                grid-template-columns:
+                    repeat(auto-fit, minmax(150px, 1fr));
+            }
+
+
+            .project-button:hover {
+
+                transform: none;
+            }
+
+
+            .main-content {
+
+                margin-left: 0;
+            }
+
+
+            .hero {
+
+                min-height: auto;
+
+                padding: 70px 30px;
+            }
+
+
+            .hero h1 {
+
+                font-size: 48px;
+            }
+
+
+            .hero h2 {
+
+                font-size: 23px;
+            }
+
+
+            .featured-projects {
+
+                padding: 70px 30px;
+            }
+
+        }
+
+/* =========================================================
+           SERDES LAB PAGE
+           Same visual language as the portfolio homepage.
+           ========================================================= */
+
+        .lab-content {
+            max-width: 1100px;
+            margin: auto;
+            padding: 70px 60px 110px 60px;
+        }
+
+
+        .lab-content > section:first-child h2 {
+            margin-top: 0;
+            font-size: 46px;
+        }
+
+
+        .lab-content section {
+            margin-bottom: 30px;
+            padding: 32px;
+
+            background-color: var(--card-background);
+
+            border: 1px solid var(--border);
+            border-radius: 10px;
+
+            box-shadow: 0 2px 5px var(--shadow);
+        }
+
+
+        .lab-content section h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+
+            color: var(--accent);
+
+            font-size: 32px;
+            line-height: 1.2;
+        }
+
+
+        .lab-content p,
+        .lab-content li,
+        .lab-content dt,
+        .lab-content dd {
+            color: var(--text-secondary);
+
+            font-size: 17px;
+            line-height: 1.7;
+        }
+
+
+        .lab-content ul,
+        .lab-content ol {
+            padding-left: 28px;
+        }
+
+
+        .lab-content li + li {
+            margin-top: 6px;
+        }
+
+
+        .lab-content a {
+            color: var(--accent);
+
+            font-weight: bold;
+        }
+
+
+        .lab-content a:hover {
+            color: var(--accent-hover);
+
+            text-decoration: underline;
+        }
+
+
+        /* =========================================================
+           INLINE COMMANDS / LITERALS
+           ========================================================= */
+
+        .lab-content .docutils.literal,
+        .lab-content code {
+            padding: 2px 6px;
+
+            background-color: #e7e7e7;
+
+            color: var(--text-main);
+
+            border: 1px solid var(--border);
+            border-radius: 5px;
+
+            font-family: Consolas, "Courier New", monospace;
+        }
+
+
+        /* =========================================================
+           COMMAND BLOCKS
+           ========================================================= */
+
+        .lab-content pre {
+            width: 100%;
+            max-width: 100%;
+
+            margin: 20px 0;
+            padding: 18px 20px;
+
+            overflow-x: auto;
+
+            background-color: var(--sidebar-background);
+            color: var(--text-main);
+
+            border: 1px solid var(--border);
+            border-left: 5px solid var(--accent);
+            border-radius: 8px;
+
+            box-shadow: 0 2px 4px var(--shadow);
+
+            font-family: Consolas, "Courier New", monospace;
+
+            white-space: pre-wrap;
+        }
+
+
+        .lab-content pre code,
+        .lab-content pre .docutils.literal {
+            padding: 0;
+
+            background-color: transparent;
+
+            color: var(--text-main);
+
+            border: none;
+
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+
+        /* =========================================================
+           NOTES
+           ========================================================= */
+
+        .lab-content .admonition {
+            margin: 24px 0;
+            padding: 20px 22px;
+
+            background-color: var(--background);
+
+            border: 1px solid var(--border);
+            border-left: 5px solid var(--accent);
+            border-radius: 8px;
+        }
+
+
+        .lab-content .admonition-title {
+            margin-top: 0;
+            margin-bottom: 10px;
+
+            color: var(--accent);
+
+            font-weight: bold;
+        }
+
+
+        /* =========================================================
+           IMAGES
+           ========================================================= */
+
+        .lab-content img {
+            display: block;
+
+            max-width: 100%;
+            height: auto;
+
+            margin-top: 26px;
+            margin-bottom: 26px;
+
+            border: 1px solid var(--border);
+            border-radius: 9px;
+
+            box-shadow: 0 3px 10px var(--shadow);
+        }
+
+
+        .lab-content img.align-center {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+
+        /* =========================================================
+           DOWNLOAD LINKS
+           ========================================================= */
+
+        .lab-content a[download] {
+            display: inline-block;
+
+            margin: 10px 0;
+            padding: 12px 18px;
+
+            background-color: var(--card-background);
+
+            color: var(--accent);
+
+            border: 1px solid var(--border);
+            border-radius: 7px;
+
+            box-shadow: 0 2px 4px var(--shadow);
+
+            transition:
+                background-color 0.20s ease,
+                color 0.20s ease,
+                border-color 0.20s ease,
+                transform 0.20s ease;
+        }
+
+
+        .lab-content a[download]:hover {
+            background-color: var(--accent);
+
+            color: white;
+
+            border-color: var(--accent);
+
+            transform: translateY(-2px);
+
+            text-decoration: none;
+        }
+
+
+        /* =========================================================
+           BLOCKQUOTES / SMALL DOCUTILS HELPERS
+           ========================================================= */
+
+        .lab-content blockquote {
+            margin: 20px 0;
+        }
+
+
+        .lab-content .simple {
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+
+
+        .lab-content .whitespace {
+            white-space: pre-wrap;
+        }
+
+
+        .lab-content .line-block {
+            margin: 0;
+        }
+
+
+        /* =========================================================
+           MOBILE
+           ========================================================= */
+
+        @media (max-width: 850px) {
+
+            .lab-content {
+                padding: 55px 30px 80px 30px;
+            }
+
+
+            .lab-content > section:first-child h2 {
+                font-size: 38px;
+            }
+
+
+            .lab-content section {
+                padding: 22px;
+            }
+
+
+            .lab-content section h2 {
+                font-size: 28px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+
+<body>
+
+
+    <!-- =========================================================
+         PERMANENT LEFT SIDEBAR
+         ========================================================= -->
+
+    <aside class="project-sidebar">
+
+
+        <h2>
+            Projects
+        </h2>
+
+
+        <nav class="project-buttons">
+
+
+            <a
+                class="project-button"
+                href="../../riscv/index.html"
+            >
+                RISC-V MCU
+            </a>
+
+
+            <a
+                class="project-button"
+                href="../index.html"
+            >
+                SerDes Labs
+            </a>
+
+
+            <a
+                class="project-button"
+                href="../../fpga/index.html"
+            >
+                FPGA DFX
+            </a>
+
+
+            <a
+                class="project-button"
+                href="../../come_to_papa/index.html"
+            >
+                Come to Pawpa
+            </a>
+
+
+            <a
+                class="project-button"
+                href="../../../index.html"
+            >
+                ← Home
+            </a>
+
+
+        </nav>
+
+
+    </aside>
+
+
+
+    <!-- =========================================================
+         EVERYTHING TO THE RIGHT
+         Original Lab 2 content below is preserved.
+         ========================================================= -->
+
+    <main class="main-content">
+
+        <div class="lab-content">
+
+<section id="real-eye-diagram-skywater-pdk">
+<h2>Real Eye Diagram: Skywater PDK</h2>
+<p>So last lab we saw the comically perfectly square eye diagram.</p>
+<p>This time we're going to use use Cadence tools to go from:</p>
+<p>RTL -&gt; Logic Gates -&gt; Standard Cells -&gt; Place and Routing -&gt; Eye Diagram</p>
+<p>We'll see the true eye diagram and if time permits it to me, we'll try to purposely close it by
+ramping up the bit rate.</p>
+<p>One interesting image I wanted to show from the High Speed Links Texas A&amp;M Course (<a class="reference external" href="https://people.engr.tamu.edu/spalermo/ecen720.html">https://people.engr.tamu.edu/spalermo/ecen720.html</a>):</p>
+<img alt="images/Eye_Measured_vs_sim.png" class="align-center" src="images/Eye_Measured_vs_sim.png" style="width: 60%;" />
+<p>We can see how with good simulation we can get close to the real thing. Also how we can improve the width
+and height of the eye. More on that later though. Let's put a pin in it for now.</p>
+</section>
+<section id="load-skywater-pdk-into-genus">
+<h2>Load Skywater PDK into Genus</h2>
+<p><span class="docutils literal">cd ..</span> command yourself until you're inside Lab1_Serial_vs_Parallel and outside Serdes_TxRx.</p>
+<p>command <span class="docutils literal">ls</span> should show 2 directories Parallel_Tx and Serdes_TxRx</p>
+<p>We'll need to download the SkyWater PDK (No the whole she-bang, just what we need):</p>
+<aside class="admonition note">
+<p class="admonition-title">Note</p>
+<blockquote>
+<p>Commands to run:</p>
+<ul class="simple">
+<li><p>git clone --depth 1 --no-checkout <a class="reference external" href="https://github.com/The-OpenROAD-Project/OpenROAD-flow-scripts.git">https://github.com/The-OpenROAD-Project/OpenROAD-flow-scripts.git</a> sky130_orfs</p></li>
+<li><p>cd sky130_orfs</p></li>
+<li><p>git config core.sparseCheckout true</p></li>
+<li><p>echo &quot;flow/platforms/sky130hd/lib/&quot; &gt; .git/info/sparse-checkout</p></li>
+<li><p>git read-tree -mu HEAD</p></li>
+<li><p>ls flow/platforms/sky130hd/lib</p></li>
+</ul>
+</blockquote>
+<p>After the last command you should see:</p>
+<blockquote>
+<p><span class="docutils literal">sky130_fd_sc_hd__tt_025C_1v80.lib</span></p>
+</blockquote>
+</aside>
+<p><span class="docutils literal">cd</span> INTO Serdes_TxRx</p>
+<p>Now open Genus with: <span class="docutils literal">genus</span></p>
+<aside class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Next Set of Commands to run in Genus:</p>
+<ul class="simple">
+<li><p>set_db library ../sky130_orfs/flow/platforms/sky130hd/lib/sky130_fd_sc_hd__tt_025C_1v80.lib</p></li>
+<li><p>read_hdl -sv Serializer_tx.sv</p></li>
+<li><p>read_hdl -sv Deserializer_rx.sv</p></li>
+<li><p>read_hdl -sv top_level_serdes.sv</p></li>
+<li><p>elaborate top_level_serdes</p></li>
+</ul>
+</aside>
+<p>Verify with:</p>
+<ul class="simple">
+<li><p>get_db current_design .name</p></li>
+</ul>
+<p>You should see something like: <span class="docutils literal">top_level_serdes</span></p>
+</section>
+<section id="rtl-logic-gates-standard-cells">
+<h2>RTL -&gt; Logic Gates -&gt; Standard Cells</h2>
+<p>Now let's make a 100Mhz Clk.</p>
+<ul class="simple">
+<li><p>create_clock -name SERDES_CLK -period 10 [get_ports CLK]</p></li>
+</ul>
+<p>Now, let's synthesize to Logic Gates</p>
+<p>RTL -&gt; Logic Gates</p>
+<ul class="simple">
+<li><p><span class="docutils literal">syn_generic</span></p></li>
+</ul>
+<p>We can see the logistics with</p>
+<blockquote>
+<ul class="simple">
+<li><p><span class="docutils literal">report_area</span></p></li>
+</ul>
+</blockquote>
+<p>Now, let's map the gates to cells</p>
+<p>Logic Gates -&gt; Standard Cells</p>
+<ul class="simple">
+<li><p><span class="docutils literal">syn_map</span></p></li>
+</ul>
+<p>Logistics Check:</p>
+<blockquote>
+<ul class="simple">
+<li><p><span class="docutils literal">report_gates</span></p></li>
+<li><p><span class="docutils literal">report_area</span></p></li>
+<li><p><span class="docutils literal">report_timing</span></p></li>
+</ul>
+</blockquote>
+<p>We have our Netlist in Genus. Now we have to export the Netlist.</p>
+<blockquote>
+<ul class="simple">
+<li><p><span class="docutils literal">exec mkdir <span class="pre">-p</span> genus_out</span></p></li>
+<li><p><span class="docutils literal">write_hdl &gt; genus_out/top_level_serdes_mapped.v</span></p></li>
+<li><p><span class="docutils literal">write_sdc &gt; genus_out/top_level_serdes.sdc</span></p></li>
+</ul>
+</blockquote>
+</section>
+<section id="the-sdf-file">
+<h2>The SDF File</h2>
+<p>Now we need an SDF File. Which will give us the timing contrainsts of these
+SkyWater130 standard cells, so that we can simulate it.</p>
+<aside class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Conceptually:</p>
+<blockquote>
+<p>SKY130 DFF</p>
+<p>clock-to-Q = 0.18 ns</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>SKY130 MUX</p>
+<p>A-to-X = 0.12 ns</p>
+<p>etc.</p>
+</blockquote>
+<p>Will become info in out SDF file:</p>
+<p>top_level_serdes.sdf</p>
+<p>Now that we have the SDF file with these timing constraints. We can go back
+to Xcellium to simulate it.</p>
+<p>gate function + gate timing = timing-aware simulation</p>
+<p>Next, we will run:</p>
+<blockquote>
+<ul class="simple">
+<li><p><span class="docutils literal">write_sdf &gt; genus_out/top_level_serdes.sdf</span></p></li>
+<li><p><span class="docutils literal">exec ls <span class="pre">-lh</span> genus_out</span></p></li>
+</ul>
+</blockquote>
+<p>you should see something like:</p>
+<pre class="code rst literal-block"><code>READ,WRITE,EXE permissions USERNAME top_level_serdes.sdc<span class="whitespace">
+
+</span>READ,WRITE,EXE permissions USERNAME top_level_serdes.sdf<span class="whitespace">
+
+</span>READ,WRITE,EXE permissions USERNAME top_level_serdes_mapped.v</code></pre>
+</aside>
+<p>You can now exit genus with:</p>
+<blockquote>
+<ul class="simple">
+<li><p><span class="docutils literal">exit</span></p></li>
+</ul>
+</blockquote>
+<p>What we've done so far:</p>
+<blockquote>
+<pre class="code rst literal-block"><code>SystemVerilog RTL<span class="whitespace">
+</span>    ↓<span class="whitespace">
+</span>Genus<span class="whitespace">
+</span>    ↓<span class="whitespace">
+</span>SKY130 gates<span class="whitespace">
+</span>    ↓<span class="whitespace">
+</span>mapped Verilog<span class="whitespace">
+</span>    +<span class="whitespace">
+</span>SDF timing</code></pre>
+</blockquote>
+<dl class="simple">
+<dt>In the terminal we can run:</dt>
+<dd><ul class="simple">
+<li><p><span class="docutils literal">cat genus_out/top_level_serdes_mapped.v</span></p></li>
+</ul>
+</dd>
+</dl>
+<p>To see the verilog file with the SkyWater Standard Cells</p>
+<p>Xcelium doesn't know what to do with these Standard Cells, so we have
+to give it the timing information.</p>
+<blockquote>
+<ul class="simple">
+<li><p><span class="docutils literal">git clone <span class="pre">--depth</span> 1 <span class="pre">https://github.com/google/skywater-pdk-libs-sky130_fd_sc_hd.git</span> sky130_sc_hd</span></p></li>
+<li><dl class="simple">
+<dt><span class="docutils literal">ls sky130_sc_hd</span></dt>
+<dd><ul>
+<li><p>Should reveal 3 directories: cells, models, timing</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p><span class="docutils literal">git clone <span class="pre">https://github.com/maganamon/sky130_models.git</span></span></p></li>
+<li><p><span class="docutils literal">cp tb_top_level_serdes.sv tb_gate_level_serdes.sv</span></p></li>
+<li><p>open the gate test bench file with <span class="docutils literal">nano</span></p></li>
+<li><p>Delete the parameterized stuff next to the module name</p></li>
+</ul>
+<p>add this after module initialization:</p>
+<pre class="code rst literal-block"><code>`ifdef GATE_LEVEL<span class="whitespace">
+</span>initial begin<span class="whitespace">
+</span>    $sdf_annotate(<span class="whitespace">
+</span>        &quot;genus_out/top_level_serdes.sdf&quot;,<span class="whitespace">
+</span>        dut<span class="whitespace">
+</span>    );<span class="whitespace">
+</span>end<span class="whitespace">
+</span>`endif</code></pre>
+<p>Find the dump_var change to &quot;wave_gate.vcd&quot;</p>
+<pre class="code rst literal-block"><code>xrun -64bit -sv \<span class="whitespace">
+</span>-timescale 1ns/1ps \<span class="whitespace">
+</span>sky130_models/primitives.v \<span class="whitespace">
+</span>genus_out/top_level_serdes_mapped.v \<span class="whitespace">
+</span>tb_gate_level_serdes.sv \<span class="whitespace">
+</span>-v sky130_models/sky130_fd_sc_hd.v \<span class="whitespace">
+</span>-top tb_top_level_serdes \<span class="whitespace">
+</span>-access +rwc \<span class="whitespace">
+</span>-define GATE_LEVEL \<span class="whitespace">
+</span>-maxdelays \<span class="whitespace">
+</span>-sdf_verbose</code></pre>
+</blockquote>
+</section>
+<section id="ngspice-book-mark">
+<h2>!!!!! NGSpice Book Mark !!!!!!!!!</h2>
+<blockquote>
+<p>We use a Python script to turn the wave.vcd file with the timing delays into a
+.pwl file that ngspice can use.</p>
+<ul class="simple">
+<li><p><span class="docutils literal">mv sky130_models/vcd_to_pwl.py .</span></p></li>
+<li><p><span class="docutils literal">python3 vcd_to_pwl.py</span></p></li>
+<li><p><span class="docutils literal">cat serial_data_sdf.pwl</span></p></li>
+</ul>
+<p>Then go to your WSL (Linux) machine and make a new Directory. Put the .pwl file in
+the new directory.</p>
+<p>You will also need to put a .cir file in there as well</p>
+<a href="files/sdf_electrical_eye.cir" download>
+    Download the .cir file (CLICK ME)
+</a><dl class="simple">
+<dt>run it with:</dt>
+<dd><ul class="simple">
+<li><p><span class="docutils literal">ngspice sdf_electrical_eye.cir</span></p></li>
+</ul>
+</dd>
+</dl>
+<img alt="images/final_eyediagram_lab2.png" class="align-center" src="images/ng_ss.png" style="width: 60%;" />
+<p>It should have created a eye_data.txt file with the electrical data (including
+Capacitance, Resistance, and Current)</p>
+<p>We switched to WSL to use NGSpice because we don't have Spectre(The Cadence equivalent)</p>
+<p>So now we'll take this .txt file and import it into Cadence.
+Then run an eye diagram measurement on it.</p>
+<p>For those who are following along at CARP:</p>
+<a href="files/eye_data.txt" download>
+    Download the .txt file (CLICK ME)
+</a><ul class="simple">
+<li><p><span class="docutils literal">Import</span> the .txt it will show up in your home directory</p></li>
+</ul>
+<p>Open Viva.
+- <span class="docutils literal">viva &amp;</span>
+- Tools Tab -&gt; Calculator
+Paste this in:</p>
+<pre class="code rst literal-block"><code>getAsciiWave(&quot;/home/nanohub/rudy_calpolyslo/CADENCE/eye_data.txt&quot; 1 2 ?xName &quot;Time&quot; ?xUnits &quot;s&quot; ?yName &quot;V(rx)&quot; ?yUnits &quot;V&quot;)</code></pre>
+<ul class="simple">
+<li><p>Press enter</p></li>
+<li><p>Plot with the Calculator and Waveform Icon. &quot;Evaluate the buffer. If Scalar,....&quot;</p></li>
+</ul>
+<p>Let's see the eye diagram:</p>
+<pre class="code rst literal-block"><code>Start: 0.3u<span class="whitespace">
+
+</span>100 MHz  → UI = 10 ns<span class="whitespace">
+</span>500 MHz  → UI = 2 ns<span class="whitespace">
+</span>1 GHz    → UI = 1 ns<span class="whitespace">
+</span>2 GHz    → UI = 500 ps<span class="whitespace">
+
+</span>Turning on Intensity is cool :)</code></pre>
+</blockquote>
+<img alt="images/final_eyediagram_lab2.png" class="align-center" src="images/final_eyediagram_lab2.png" style="width: 60%;" />
+<p>and that's all. Thank you. :3</p>
+</section>
+<!-- =========================================================
+     BOTTOM LAB NAVIGATION
+     ========================================================= -->
+
+<div
+    style="
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        margin-top: 50px;
+        padding-top: 30px;
+        border-top: 1px solid var(--border);
+    "
+>
+
+    <!-- Back to main SerDes project page -->
+    <a
+        href="../index.html"
+        style="
+            display: inline-block;
+            padding: 14px 22px;
+
+            background-color: var(--card-background);
+            color: var(--accent);
+
+            border: 1px solid var(--border);
+            border-radius: 7px;
+
+            font-size: 16px;
+            font-weight: bold;
+
+            box-shadow: 0 2px 4px var(--shadow);
+
+            text-decoration: none;
+        "
+    >
+        ← Back to SerDes
+    </a>
+
+
+</div>
+
+        </div>
+
+    </main>
+
+
+</body>
+
+</html>

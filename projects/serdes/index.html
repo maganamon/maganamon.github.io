@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>SerDes Labs | Rodolfo Magana</title>
+
+
+    <style>
+
+        /* =========================================================
+           COLORS
+           ========================================================= */
+
+        :root {
+
+            --background: #e4e4e4;
+
+            --sidebar-background: #e9e9e9;
+
+            --card-background: #f2f2f2;
+
+            --text-main: #111111;
+
+            --text-secondary: #383838;
+
+            --text-muted: #666666;
+
+            --accent: #5f8bea;
+
+            --accent-hover: #4978df;
+
+            --border: #d0d0d0;
+
+            --shadow: rgba(0, 0, 0, 0.12);
+        }
+
+
+
+        /* =========================================================
+           GLOBAL
+           ========================================================= */
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+            margin: 0;
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            background-color: var(--background);
+
+            color: var(--text-main);
+        }
+
+
+        a {
+            text-decoration: none;
+        }
+
+
+
+        /* =========================================================
+           FIXED LEFT PROJECT SIDEBAR
+           ========================================================= */
+
+        .project-sidebar {
+
+            position: fixed;
+
+            top: 0;
+            left: 0;
+
+            width: 270px;
+            height: 100vh;
+
+            padding: 60px 30px;
+
+            background-color: var(--sidebar-background);
+
+            border-right: 1px solid var(--border);
+
+            overflow-y: auto;
+        }
+
+
+        .project-sidebar h2 {
+
+            font-size: 36px;
+
+            color: var(--accent);
+
+            margin-top: 0;
+
+            margin-bottom: 30px;
+        }
+
+
+
+        /* =========================================================
+           SIDEBAR BUTTONS
+           ========================================================= */
+
+        .project-buttons {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 16px;
+        }
+
+
+        .project-button {
+
+            display: block;
+
+            width: 100%;
+
+            padding: 18px;
+
+            background-color: var(--card-background);
+
+            color: var(--text-main);
+
+            border: 1px solid var(--border);
+
+            border-radius: 7px;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            box-shadow: 0 2px 4px var(--shadow);
+
+            transition:
+                background-color 0.2s ease,
+                color 0.2s ease,
+                border-color 0.2s ease,
+                transform 0.2s ease;
+        }
+
+
+        .project-button:hover {
+
+            background-color: var(--accent);
+
+            color: white;
+
+            border-color: var(--accent);
+
+            transform: translateX(6px);
+        }
+
+
+
+        /* =========================================================
+           MAIN CONTENT
+           ========================================================= */
+
+        .main-content {
+
+            margin-left: 270px;
+        }
+
+
+
+        /* =========================================================
+           PAGE HEADER
+           ========================================================= */
+
+        .project-header {
+
+            max-width: 1100px;
+
+            margin: auto;
+
+            padding: 80px 60px 30px 60px;
+        }
+
+
+        .project-header h1 {
+
+            margin-top: 0;
+
+            margin-bottom: 12px;
+
+            font-size: 58px;
+
+            color: var(--accent);
+        }
+
+
+        .project-header h2 {
+
+            margin-top: 0;
+
+            margin-bottom: 20px;
+
+            font-size: 26px;
+
+            font-weight: normal;
+
+            color: var(--text-secondary);
+        }
+
+
+        .project-header p {
+
+            max-width: 850px;
+
+            font-size: 19px;
+
+            line-height: 1.7;
+
+            color: var(--text-secondary);
+        }
+
+
+
+        /* =========================================================
+           PDF SECTION
+           ========================================================= */
+
+        .pdf-section {
+
+            max-width: 1100px;
+
+            margin: auto;
+
+            padding: 30px 60px 50px 60px;
+        }
+
+
+        .pdf-section h2 {
+
+            font-size: 36px;
+
+            color: var(--accent);
+
+            margin-top: 0;
+
+            margin-bottom: 25px;
+        }
+
+
+        .pdf-container {
+
+            width: 100%;
+
+            height: 850px;
+
+            background-color: var(--card-background);
+
+            border: 1px solid var(--border);
+
+            border-radius: 10px;
+
+            overflow: hidden;
+
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+
+
+        .pdf-frame {
+
+            display: block;
+
+            width: 100%;
+
+            height: 100%;
+
+            border: none;
+        }
+
+
+
+        /* =========================================================
+           VIDEO SECTION
+           ========================================================= */
+
+        .video-section {
+
+            max-width: 1100px;
+
+            margin: auto;
+
+            padding: 30px 60px 50px 60px;
+        }
+
+
+        .video-section h2 {
+
+            font-size: 36px;
+
+            color: var(--accent);
+
+            margin-top: 0;
+
+            margin-bottom: 25px;
+        }
+
+
+        .video-container {
+
+            position: relative;
+
+            width: 100%;
+
+            padding-top: 56.25%;
+
+            background-color: #000000;
+
+            border: 1px solid var(--border);
+
+            border-radius: 10px;
+
+            overflow: hidden;
+
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+
+
+        .video-frame {
+
+            position: absolute;
+
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 100%;
+
+            border: none;
+        }
+
+
+
+        /* =========================================================
+           LABS SECTION
+           ========================================================= */
+
+        .labs-section {
+
+            max-width: 1100px;
+
+            margin: auto;
+
+            padding: 30px 60px 100px 60px;
+        }
+
+
+        .labs-section h2 {
+
+            font-size: 36px;
+
+            color: var(--accent);
+
+            margin-top: 0;
+
+            margin-bottom: 25px;
+        }
+
+
+        .lab-links {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 16px;
+        }
+
+
+        .lab-button {
+
+            display: block;
+
+            width: 100%;
+
+            padding: 22px 25px;
+
+            background-color: var(--card-background);
+
+            color: var(--text-main);
+
+            border: 1px solid var(--border);
+
+            border-radius: 8px;
+
+            font-size: 18px;
+
+            font-weight: bold;
+
+            box-shadow: 0 2px 4px var(--shadow);
+
+            transition:
+                background-color 0.2s ease,
+                color 0.2s ease,
+                border-color 0.2s ease,
+                transform 0.2s ease;
+        }
+
+
+        .lab-button:hover {
+
+            background-color: var(--accent);
+
+            color: white;
+
+            border-color: var(--accent);
+
+            transform: translateX(6px);
+        }
+
+
+
+        /* =========================================================
+           MOBILE
+           ========================================================= */
+
+        @media (max-width: 850px) {
+
+
+            .project-sidebar {
+
+                position: relative;
+
+                width: 100%;
+
+                height: auto;
+
+                padding: 30px;
+
+                border-right: none;
+
+                border-bottom: 1px solid var(--border);
+            }
+
+
+            .project-buttons {
+
+                display: grid;
+
+                grid-template-columns:
+                    repeat(auto-fit, minmax(150px, 1fr));
+            }
+
+
+            .project-button:hover {
+
+                transform: none;
+            }
+
+
+            .main-content {
+
+                margin-left: 0;
+            }
+
+
+            .project-header {
+
+                padding: 60px 30px 20px 30px;
+            }
+
+
+            .project-header h1 {
+
+                font-size: 44px;
+            }
+
+
+            .pdf-section {
+
+                padding: 30px;
+            }
+
+
+            .pdf-container {
+
+                height: 600px;
+            }
+
+
+            .video-section {
+
+                padding: 30px;
+            }
+
+
+            .labs-section {
+
+                padding: 30px 30px 70px 30px;
+            }
+
+
+            .lab-button:hover {
+
+                transform: none;
+            }
+
+        }
+
+
+    </style>
+
+</head>
+
+
+
+<body>
+
+
+    <!-- =========================================================
+         LEFT SIDEBAR
+         ========================================================= -->
+
+    <aside class="project-sidebar">
+
+
+        <h2>
+            Projects
+        </h2>
+
+
+        <nav class="project-buttons">
+
+
+            <a
+                class="project-button"
+                href="../riscv/index.html"
+            >
+                RISC-V MCU
+            </a>
+
+
+            <a
+                class="project-button"
+                href="index.html"
+            >
+                SerDes Labs
+            </a>
+
+
+            <a
+                class="project-button"
+                href="../fpga/index.html"
+            >
+                FPGA DFX
+            </a>
+
+
+            <a
+                class="project-button"
+                href="../come_to_papa/index.html"
+            >
+                Come to Pawpa
+            </a>
+
+
+            <a
+                class="project-button"
+                href="../../index.html"
+            >
+                ← Home
+            </a>
+
+
+        </nav>
+
+
+    </aside>
+
+
+
+    <!-- =========================================================
+         MAIN CONTENT
+         ========================================================= -->
+
+    <main class="main-content">
+
+
+        <!-- =====================================================
+             TITLE
+             ===================================================== -->
+
+        <div class="project-header">
+
+
+            <h1>
+                SerDes Labs for CARP
+            </h1>
+
+
+            <h2>
+                RTL to Physical Design and Signal Integrity
+            </h2>
+
+
+            <p>
+                A series of educational labs designed to introduce
+                CARP members to serializer/deserializer concepts and
+                professional ASIC development tools including Xcelium,
+                Genus, Innovus, ViVA, and NGSpice.
+            </p>
+
+
+        </div>
+
+
+
+        <!-- =====================================================
+             EMBEDDED PDF
+             ===================================================== -->
+
+        <div class="pdf-section">
+
+
+            <h2>
+                SerDes Presentation
+            </h2>
+
+
+            <div class="pdf-container">
+
+
+                <iframe
+                    class="pdf-frame"
+                    src="pdfs/CARP-SerDesIntro.pdf"
+                    title="SerDes Presentation PDF"
+                >
+                </iframe>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =====================================================
+             YOUTUBE VIDEO
+             ===================================================== -->
+
+        <div class="video-section">
+
+
+            <h2>
+                SerDes Video
+            </h2>
+
+
+            <div class="video-container">
+
+
+                <iframe
+                    class="video-frame"
+                    src="https://www.youtube.com/embed/CjmLQn2epvM"
+                    title="SerDes Video"
+                    allow="
+                        accelerometer;
+                        autoplay;
+                        clipboard-write;
+                        encrypted-media;
+                        gyroscope;
+                        picture-in-picture;
+                        web-share
+                    "
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen
+                >
+                </iframe>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =====================================================
+             LABS
+             ===================================================== -->
+
+        <div class="labs-section">
+
+
+            <h2>
+                Labs
+            </h2>
+
+
+            <div class="lab-links">
+
+
+                <a
+                    class="lab-button"
+                    href="labs/serdes_lab1.html"
+                >
+                    SerDes Lab 1 →
+                </a>
+
+
+                <a
+                    class="lab-button"
+                    href="labs/serdes_lab2.html"
+                >
+                    SerDes Lab 2 →
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+
+    </main>
+
+
+</body>
+
+</html>

@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>SerDes Lab 1 | Rodolfo Magana</title>
+
+
+    <style>
+
+/* =========================================================
+           COLORS
+           ========================================================= */
+
+        :root {
+
+            /* Main page background */
+            --background: #e4e4e4;
+
+            /* Slightly lighter sidebar */
+            --sidebar-background: #e9e9e9;
+
+            /* Cards and buttons */
+            --card-background: #f2f2f2;
+            --card-hover: #f8f8f8;
+
+            /* Main text */
+            --text-main: #111111;
+
+            /* Paragraph / secondary text */
+            --text-secondary: #383838;
+
+            /* Muted text */
+            --text-muted: #666666;
+
+            /* Blue inspired by the lightning bolt */
+            --accent: #5f8bea;
+
+            /* Slightly darker blue for hover */
+            --accent-hover: #4978df;
+
+            /* Borders */
+            --border: #d0d0d0;
+
+            /* Soft shadow */
+            --shadow: rgba(0, 0, 0, 0.12);
+        }
+
+
+
+        /* =========================================================
+           GLOBAL
+           ========================================================= */
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+            margin: 0;
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            background-color: var(--background);
+
+            color: var(--text-main);
+        }
+
+
+        a {
+            text-decoration: none;
+        }
+
+
+
+        /* =========================================================
+           PERMANENT LEFT PROJECT SIDEBAR
+           ========================================================= */
+
+        .project-sidebar {
+
+            position: fixed;
+
+            top: 0;
+            left: 0;
+
+            width: 270px;
+            height: 100vh;
+
+            padding: 60px 30px;
+
+            background-color: var(--sidebar-background);
+
+            border-right: 1px solid var(--border);
+
+            overflow-y: auto;
+        }
+
+
+        .project-sidebar h2 {
+
+            font-size: 36px;
+
+            margin-top: 0;
+            margin-bottom: 30px;
+
+            color: var(--accent);
+        }
+
+
+
+        /* =========================================================
+           PROJECT BUTTONS
+           ========================================================= */
+
+        .project-buttons {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 16px;
+        }
+
+
+        .project-button {
+
+            display: block;
+
+            width: 100%;
+
+            padding: 18px 18px;
+
+            background-color: var(--card-background);
+
+            color: var(--text-main);
+
+            border: 1px solid var(--border);
+
+            border-radius: 7px;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            box-shadow: 0 2px 4px var(--shadow);
+
+            transition:
+                background-color 0.20s ease,
+                color 0.20s ease,
+                border-color 0.20s ease,
+                transform 0.20s ease,
+                box-shadow 0.20s ease;
+        }
+
+
+        .project-button:hover {
+
+            background-color: var(--accent);
+
+            color: white;
+
+            border-color: var(--accent);
+
+            transform: translateX(6px);
+
+            box-shadow: 0 4px 9px var(--shadow);
+        }
+
+
+
+        /* =========================================================
+           MAIN CONTENT
+           ========================================================= */
+
+        .main-content {
+
+            margin-left: 270px;
+        }
+
+
+
+        /* =========================================================
+           FRONT PAGE
+           ========================================================= */
+
+        .hero {
+
+            min-height: 100vh;
+
+            max-width: 1100px;
+
+            margin: auto;
+
+            padding: 60px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+        }
+
+
+        .hero h1 {
+
+            font-size: 68px;
+
+            margin-top: 0;
+            margin-bottom: 10px;
+
+            color: var(--accent);
+        }
+
+
+        .hero h2 {
+
+            font-size: 29px;
+
+            font-weight: normal;
+
+            color: var(--text-secondary);
+
+            margin-top: 0;
+            margin-bottom: 35px;
+        }
+
+
+        .hero p {
+
+            max-width: 800px;
+
+            font-size: 20px;
+
+            line-height: 1.7;
+
+            margin-bottom: 35px;
+
+            color: var(--text-secondary);
+        }
+
+
+
+        /* =========================================================
+           GITHUB / LINKEDIN / YOUTUBE BUTTONS
+           ========================================================= */
+
+        .hero-links {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 16px;
+        }
+
+
+        .hero-button {
+
+            display: inline-block;
+
+            padding: 14px 24px;
+
+            background-color: var(--card-background);
+
+            color: var(--accent);
+
+            border: 1px solid var(--border);
+
+            border-radius: 7px;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            box-shadow: 0 2px 4px var(--shadow);
+
+            transition:
+                background-color 0.20s ease,
+                color 0.20s ease,
+                border-color 0.20s ease,
+                transform 0.20s ease,
+                box-shadow 0.20s ease;
+        }
+
+
+        .hero-button:hover {
+
+            background-color: var(--accent);
+
+            color: white;
+
+            border-color: var(--accent);
+
+            transform: translateY(-3px);
+
+            box-shadow: 0 5px 10px var(--shadow);
+        }
+
+
+
+        /* =========================================================
+           FEATURED PROJECTS
+           ========================================================= */
+
+        .featured-projects {
+
+            max-width: 1100px;
+
+            margin: auto;
+
+            padding: 80px 60px 120px 60px;
+        }
+
+
+        .featured-projects h2 {
+
+            font-size: 44px;
+
+            margin-top: 0;
+            margin-bottom: 40px;
+
+            color: var(--accent);
+        }
+
+
+
+        /* =========================================================
+           PROJECT CARDS
+           ========================================================= */
+
+        .project-card {
+
+            background-color: var(--card-background);
+
+            border: 1px solid var(--border);
+
+            border-radius: 10px;
+
+            padding: 32px;
+
+            margin-bottom: 30px;
+
+            box-shadow: 0 2px 5px var(--shadow);
+
+            transition:
+                transform 0.20s ease,
+                box-shadow 0.20s ease,
+                border-color 0.20s ease,
+                background-color 0.20s ease;
+        }
+
+
+        .project-card:hover {
+
+            transform: translateY(-3px);
+
+            background-color: var(--card-hover);
+
+            border-color: #bcbcbc;
+
+            box-shadow: 0 5px 12px var(--shadow);
+        }
+
+
+        .project-card h3 {
+
+            font-size: 28px;
+
+            margin-top: 0;
+            margin-bottom: 15px;
+
+            color: var(--accent);
+        }
+
+
+        .project-card p {
+
+            max-width: 800px;
+
+            font-size: 17px;
+
+            line-height: 1.6;
+
+            color: var(--text-secondary);
+        }
+
+
+        .technologies {
+
+            color: var(--text-muted);
+
+            font-size: 15px;
+
+            font-weight: bold;
+        }
+
+
+        .explore-link {
+
+            display: inline-block;
+
+            margin-top: 10px;
+
+            color: var(--accent);
+
+            font-weight: bold;
+
+            transition:
+                color 0.20s ease,
+                transform 0.20s ease;
+        }
+
+
+        .explore-link:hover {
+
+            color: var(--accent-hover);
+
+            transform: translateX(4px);
+        }
+
+
+
+        /* =========================================================
+           MOBILE
+           ========================================================= */
+
+        @media (max-width: 850px) {
+
+
+            .project-sidebar {
+
+                position: relative;
+
+                width: 100%;
+
+                height: auto;
+
+                padding: 30px;
+
+                border-right: none;
+
+                border-bottom: 1px solid var(--border);
+            }
+
+
+            .project-buttons {
+
+                display: grid;
+
+                grid-template-columns:
+                    repeat(auto-fit, minmax(150px, 1fr));
+            }
+
+
+            .project-button:hover {
+
+                transform: none;
+            }
+
+
+            .main-content {
+
+                margin-left: 0;
+            }
+
+
+            .hero {
+
+                min-height: auto;
+
+                padding: 70px 30px;
+            }
+
+
+            .hero h1 {
+
+                font-size: 48px;
+            }
+
+
+            .hero h2 {
+
+                font-size: 23px;
+            }
+
+
+            .featured-projects {
+
+                padding: 70px 30px;
+            }
+
+        }
+
+/* =========================================================
+           SERDES LAB PAGE
+           Same palette and layout language as the homepage.
+           ========================================================= */
+
+        .lab-content {
+            max-width: 1100px;
+            margin: auto;
+            padding: 70px 60px 110px 60px;
+        }
+
+
+        .lab-content > h1 {
+            margin-top: 0;
+            margin-bottom: 35px;
+
+            color: var(--accent);
+
+            font-size: 58px;
+            line-height: 1.12;
+
+            text-align: left !important;
+        }
+
+
+        .lab-content section {
+            margin-bottom: 30px;
+            padding: 32px;
+
+            background-color: var(--card-background);
+
+            border: 1px solid var(--border);
+            border-radius: 10px;
+
+            box-shadow: 0 2px 5px var(--shadow);
+        }
+
+
+        .lab-content section h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+
+            color: var(--accent);
+
+            font-size: 32px;
+        }
+
+
+        .lab-content p,
+        .lab-content li,
+        .lab-content dt,
+        .lab-content dd {
+            color: var(--text-secondary);
+
+            font-size: 17px;
+            line-height: 1.7;
+        }
+
+
+        .lab-content ul,
+        .lab-content ol {
+            padding-left: 28px;
+        }
+
+
+        .lab-content a {
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+
+        .lab-content a:hover {
+            color: var(--accent-hover);
+            text-decoration: underline;
+        }
+
+
+        /* Inline commands */
+
+        .lab-content .docutils.literal,
+        .lab-content code {
+            padding: 2px 6px;
+
+            background-color: #e7e7e7;
+            color: var(--text-main);
+
+            border: 1px solid var(--border);
+            border-radius: 5px;
+
+            font-family: Consolas, "Courier New", monospace;
+        }
+
+
+        /* Command blocks */
+
+        .lab-content pre {
+            width: 100%;
+            max-width: 100%;
+
+            margin: 20px 0;
+            padding: 18px 20px;
+
+            overflow-x: auto;
+
+            background-color: var(--sidebar-background);
+            color: var(--text-main);
+
+            border: 1px solid var(--border);
+            border-left: 5px solid var(--accent);
+            border-radius: 8px;
+
+            box-shadow: 0 2px 4px var(--shadow);
+
+            font-family: Consolas, "Courier New", monospace;
+
+            white-space: pre-wrap;
+        }
+
+
+        .lab-content pre code,
+        .lab-content pre .docutils.literal {
+            padding: 0;
+
+            background-color: transparent;
+            color: var(--text-main);
+
+            border: none;
+
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+
+        /* Notes */
+
+        .lab-content .admonition {
+            margin: 24px 0;
+            padding: 20px 22px;
+
+            background-color: var(--background);
+
+            border: 1px solid var(--border);
+            border-left: 5px solid var(--accent);
+            border-radius: 8px;
+        }
+
+
+        .lab-content .admonition-title {
+            margin-top: 0;
+            margin-bottom: 10px;
+
+            color: var(--accent);
+
+            font-weight: bold;
+        }
+
+
+        /* Images */
+
+        .lab-content img {
+            display: block;
+
+            max-width: 100%;
+            height: auto;
+
+            margin-top: 26px;
+            margin-bottom: 26px;
+
+            border: 1px solid var(--border);
+            border-radius: 9px;
+
+            box-shadow: 0 3px 10px var(--shadow);
+        }
+
+
+        .lab-content img.align-center {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+
+        .lab-content blockquote {
+            margin: 20px 0;
+        }
+
+
+        .lab-content hr {
+            height: 1px;
+
+            margin: 30px 0;
+
+            background-color: var(--border);
+
+            border: none;
+        }
+
+
+        .lab-content .simple {
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+
+
+        .lab-content .whitespace {
+            white-space: pre-wrap;
+        }
+
+
+        /* =========================================================
+           MOBILE
+           ========================================================= */
+
+        @media (max-width: 850px) {
+
+            .lab-content {
+                padding: 55px 30px 80px 30px;
+            }
+
+
+            .lab-content > h1 {
+                font-size: 42px;
+            }
+
+
+            .lab-content section {
+                padding: 22px;
+            }
+
+
+            .lab-content section h2 {
+                font-size: 28px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+
+<body>
+
+
+    <!-- =========================================================
+         PERMANENT LEFT SIDEBAR
+         ========================================================= -->
+
+    <aside class="project-sidebar">
+
+
+        <h2>
+            Projects
+        </h2>
+
+
+        <nav class="project-buttons">
+
+
+            <a
+                class="project-button"
+                href="../../riscv/index.html"
+            >
+                RISC-V MCU
+            </a>
+
+
+            <a
+                class="project-button"
+                href="../index.html"
+            >
+                SerDes Labs
+            </a>
+
+
+            <a
+                class="project-button"
+                href="../../fpga/index.html"
+            >
+                FPGA DFX
+            </a>
+
+
+            <a
+                class="project-button"
+                href="../../come_to_papa/index.html"
+            >
+                Come to Pawpa
+            </a>
+
+
+            <a
+                class="project-button"
+                href="../../../index.html"
+            >
+                ← Home
+            </a>
+
+
+        </nav>
+
+
+    </aside>
+
+
+
+    <!-- =========================================================
+         EVERYTHING TO THE RIGHT
+         ========================================================= -->
+
+    <main class="main-content">
+
+        <div class="lab-content">
+
+<h1 style="text-align: center;">Lab 1 SERDES: Cadence Basics</h1><p>The premise of this lab is for you to:</p>
+<ol class="arabic simple">
+<li><p>Get you used to using Cadence Simulation</p></li>
+<li><p>View an Eye Diagram</p></li>
+</ol>
+<p>You will find that there are <em>some</em> similarities to Vivado.</p>
+<p>There are some annoyances with the copy / paste, but I'll show you how to deal with that.</p>
+<section id="pre-requisites">
+<h2>Pre-requisites</h2>
+<ol class="arabic simple">
+<li><dl class="simple">
+<dt>Go get access to the Cadence tools</dt>
+<dd><ul class="simple">
+<li><p>Create an account using your school email at <span class="docutils literal">nanhub.org</span></p></li>
+<li><p>Go to: <span class="docutils literal"><span class="pre">https://nanohub.org/groups/cadence_access</span></span> and request access</p></li>
+<li><p>Wait to be accepted</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ol>
+</section>
+<section id="let-s-get-started">
+<h2>Let's Get Started</h2>
+<dl class="simple">
+<dt>My entry is always:</dt>
+<dd><ul class="simple">
+<li><p><span class="docutils literal"><span class="pre">https://nanohub.org/groups/cadence_access</span></span></p></li>
+</ul>
+</dd>
+</dl>
+<p>Click on <strong>Digital Implementation</strong></p>
+<p>Now. Before we start, on the Top Right click on <span class="docutils literal">Go to Access Wave</span> this will open
+the Cadence Tools in a new tab in a Windowed Full Screen. (A lot more pleasent to look at)</p>
+<p>Open the Left menu bar. You'll find the clipboard tab as well.</p>
+<p>Open a Terminal if there's not already one open.</p>
+<hr class="docutils" />
+<p>There's 2 ways to import the folder you need</p>
+<ol class="arabic simple">
+<li><dl class="simple">
+<dt>Git Clone (Easy)</dt>
+<dd><ul class="simple">
+<li><p>You will use the clipboard tab</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Create a Zip-File of the Folder and import it</dt>
+<dd><ul class="simple">
+<li><p>You will need to move the folder once you import it</p></li>
+<li><p>For when youi have a local folder and don't want to make a github repo</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ol>
+<p>We'll be using the Git Clone method.</p>
+<p>You won't be able to <span class="docutils literal">ctrl + v</span> into the terminal.</p>
+<p>Paste what you want into the box and click the clipboard icon on the top left.</p>
+<img alt="images/clipboard_ss.png" class="align-center" src="images/clipboard_ss.png" style="width: 40%;" />
+<dl class="simple">
+<dt>Use:</dt>
+<dd><ul class="simple">
+<li><p><span class="docutils literal">git clone <span class="pre">https://github.com/maganamon/CARP_Labs_Tutorials.git</span></span></p></li>
+</ul>
+</dd>
+</dl>
+<p>You will only need the <strong>SerDes_Labs</strong> Directory</p>
+<dl class="simple">
+<dt>I have a bunch of useless folders and files so you can get rid of them with:</dt>
+<dd><ul class="simple">
+<li><p>rm -rf FOLDER_NAME</p></li>
+<li><p>rm FILE_NAME</p></li>
+</ul>
+</dd>
+<dt>Now <span class="docutils literal">cd</span> chain yourself all the way to:</dt>
+<dd><ul class="simple">
+<li><p>SerDes_Labs -&gt; Lab1_Parrallel_vs_Serial -&gt; SerDes_TxRx</p></li>
+</ul>
+</dd>
+<dt>Now we're going to open Xcelium using the terminal with:</dt>
+<dd><ul class="simple">
+<li><p>Make sure it's all 1 line. I split it for website formating reasons.</p></li>
+</ul>
+</dd>
+</dl>
+<pre class="code rst literal-block"><code>xrun -64bit -sv -access +rwc -gui -top tb_top_level_serdes Serializer_tx.sv Deserializer_rx.sv<span class="whitespace">
+</span>top_level_serdes.sv tb_top_level_serdes.sv</code></pre>
+<p>The file after <span class="docutils literal"><span class="pre">-top</span></span> indicates the toplevel module.</p>
+<p>All other listed files are the modules that the top level will need.</p>
+<p>I have already written a basic Serializer and Deserializer then had ChatGPT write the Testbench.</p>
+<p><strong>Congrats</strong></p>
+<p>The simulation should now be open.</p>
+<aside class="admonition note">
+<p class="admonition-title">Note</p>
+<p>&quot;Send to Waveform&quot;</p>
+<ol class="arabic simple">
+<li><p>Add All DUT (Top Level) Signals</p></li>
+<li><p>Dut -&gt; Serial</p></li>
+</ol>
+<ul class="simple">
+<li><p>Add loaded_data, counter</p></li>
+</ul>
+</aside>
+</section>
+<section id="what-we-will-learn">
+<h2>What we will learn</h2>
+<blockquote>
+<ul class="simple">
+<li><p>Sim Console &quot;run XXXns&quot;</p></li>
+<li><p>Moving by Edge</p></li>
+<li><p>Under &quot;Cursor&quot; tab. Changing Radix</p></li>
+<li><p>Follow the Hex 55 Example</p></li>
+<li><p>Colors, Groups, Dividers</p></li>
+<li><p>Search for Values</p></li>
+</ul>
+</blockquote>
+</section>
+<section id="eye-diagram-time">
+<h2>Eye Diagram Time</h2>
+<img alt="images/viva_meme.jpg" class="align-center" src="images/viva_meme.jpg" style="width: 40%;" />
+<p><em>Virtuoso: ViVa</em> where ViVA stands for Virtuoso Visualization and Analysis Tool</p>
+<dl class="simple">
+<dt>Open Up that Bash Terminal again and run:</dt>
+<dd><ul class="simple">
+<li><p><span class="docutils literal">viva &amp;</span></p></li>
+<li><p>Give it a minute cause that 'ish is slow</p></li>
+</ul>
+</dd>
+</dl>
+<p>Click the Folder Icon on the Left under the Browser tab.</p>
+<blockquote>
+<img alt="images/viva_ss1.png" class="align-center" src="images/viva_ss1.png" style="width: 40%;" />
+</blockquote>
+<ul class="simple">
+<li><p>Expand the folder on the botton until you get to the Top_Level Folder.</p></li>
+<li><p>Click it, and look for the <strong>serial_data</strong> signal. Double Click the Signal.</p></li>
+</ul>
+<p>You should see the signal and a bunch of 0 and 1 wave forms.</p>
+<ul class="simple">
+<li><p>Click the <strong>Measurements</strong> tab at the very top</p></li>
+<li><p>Then click <strong>Digital to Analog</strong></p></li>
+</ul>
+<p>Logic High: 1 V         Logic Low: 0 V
+Rise Time: 1ps          Fall Time: 1ps</p>
+<p>We have created essentially a perfect circuit with these parameters.</p>
+<ul class="simple">
+<li><p>Click the <strong>Measurements</strong> tab again at the very top</p></li>
+<li><p>Then click <strong>Eye Diagram</strong></p></li>
+<li><p>Unit Interval for 100Mhz Clk = <strong>10ns</strong></p></li>
+</ul>
+<p>The Unit Interval tells Cadence how often to chop up the waveform and overlay them on top on each other</p>
+<ul class="simple">
+<li><p>Finally click <strong>plot eye</strong></p></li>
+</ul>
+<p>You should see something like this:</p>
+<blockquote>
+<img alt="images/perfect_eye_lab1.png" class="align-center" src="images/perfect_eye_lab1.png" style="width: 70%;" />
+</blockquote>
+<p>On the Right is the eye diagram, and on the left the Analog signal (When we went from Digital
+to Analog)</p>
+<p>notice... That doesn't look like an eye? Why is that?</p>
+<p>That's all for today. Lab 2 we'll see the real eye diagram.</p>
+<br> <br></section>
+
+<!-- =========================================================
+     BOTTOM LAB NAVIGATION
+     ========================================================= -->
+
+<div
+    style="
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        margin-top: 50px;
+        padding-top: 30px;
+        border-top: 1px solid var(--border);
+    "
+>
+
+    <!-- Back to main SerDes project page -->
+    <a
+        href="../index.html"
+        style="
+            display: inline-block;
+            padding: 14px 22px;
+
+            background-color: var(--card-background);
+            color: var(--accent);
+
+            border: 1px solid var(--border);
+            border-radius: 7px;
+
+            font-size: 16px;
+            font-weight: bold;
+
+            box-shadow: 0 2px 4px var(--shadow);
+
+            text-decoration: none;
+        "
+    >
+        ← Back to SerDes
+    </a>
+
+
+    <!-- Go to Lab 2 -->
+    <a
+        href="serdes_lab2.html"
+        style="
+            display: inline-block;
+            padding: 14px 22px;
+
+            background-color: var(--accent);
+            color: white;
+
+            border: 1px solid var(--accent);
+            border-radius: 7px;
+
+            font-size: 16px;
+            font-weight: bold;
+
+            box-shadow: 0 2px 4px var(--shadow);
+
+            text-decoration: none;
+        "
+    >
+        Next: Lab 2 →
+    </a>
+
+</div>
+        </div>
+
+    </main>
+
+    
+
+</body>
+
+</html>

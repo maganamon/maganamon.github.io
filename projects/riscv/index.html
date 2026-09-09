@@ -1,0 +1,1713 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>RISC-V MCU | Rodolfo Magana</title>
+
+
+    <style>
+
+        /* =========================================================
+           COLORS
+           ========================================================= */
+
+        :root {
+
+            --background: #e4e4e4;
+
+            --sidebar-background: #e9e9e9;
+
+            --card-background: #f2f2f2;
+            --card-hover: #f8f8f8;
+
+            --text-main: #111111;
+
+            --text-secondary: #383838;
+
+            --text-muted: #666666;
+
+            --accent: #5f8bea;
+
+            --accent-hover: #4978df;
+
+            --border: #d0d0d0;
+
+            --shadow: rgba(0, 0, 0, 0.12);
+        }
+
+
+
+        /* =========================================================
+           GLOBAL
+           ========================================================= */
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            background-color: var(--background);
+
+            color: var(--text-main);
+        }
+
+
+        a {
+            text-decoration: none;
+        }
+
+
+
+        /* =========================================================
+           PERMANENT LEFT PROJECT SIDEBAR
+           ========================================================= */
+
+        .project-sidebar {
+
+            position: fixed;
+
+            top: 0;
+            left: 0;
+
+            width: 270px;
+            height: 100vh;
+
+            padding: 60px 30px;
+
+            background-color: var(--sidebar-background);
+
+            border-right: 1px solid var(--border);
+
+            overflow-y: auto;
+        }
+
+
+        .project-sidebar h2 {
+
+            margin-top: 0;
+            margin-bottom: 30px;
+
+            color: var(--accent);
+
+            font-size: 36px;
+        }
+
+
+
+        /* =========================================================
+           PROJECT BUTTONS
+           ========================================================= */
+
+        .project-buttons {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 16px;
+        }
+
+
+        .project-button {
+
+            display: block;
+
+            width: 100%;
+
+            padding: 18px;
+
+            background-color: var(--card-background);
+
+            color: var(--text-main);
+
+            border: 1px solid var(--border);
+
+            border-radius: 7px;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            box-shadow: 0 2px 4px var(--shadow);
+
+            transition:
+                background-color 0.20s ease,
+                color 0.20s ease,
+                border-color 0.20s ease,
+                transform 0.20s ease,
+                box-shadow 0.20s ease;
+        }
+
+
+        .project-button:hover {
+
+            background-color: var(--accent);
+
+            color: white;
+
+            border-color: var(--accent);
+
+            transform: translateX(6px);
+
+            box-shadow: 0 4px 9px var(--shadow);
+        }
+
+
+
+        /* =========================================================
+           MAIN CONTENT
+           ========================================================= */
+
+        .main-content {
+            margin-left: 270px;
+        }
+
+
+        .page-shell {
+
+            max-width: 1150px;
+
+            margin: auto;
+
+            padding: 80px 60px 120px 60px;
+        }
+
+
+
+        /* =========================================================
+           HEADER
+           ========================================================= */
+
+        .project-header {
+
+            padding-bottom: 45px;
+
+            border-bottom: 1px solid var(--border);
+        }
+
+
+        .project-header h1 {
+
+            margin-top: 0;
+            margin-bottom: 12px;
+
+            color: var(--accent);
+
+            font-size: 60px;
+
+            line-height: 1.08;
+        }
+
+
+        .project-header h2 {
+
+            max-width: 900px;
+
+            margin-top: 0;
+            margin-bottom: 24px;
+
+            color: var(--text-secondary);
+
+            font-size: 28px;
+
+            font-weight: normal;
+
+            line-height: 1.4;
+        }
+
+
+        .project-header p {
+
+            max-width: 900px;
+
+            color: var(--text-secondary);
+
+            font-size: 19px;
+
+            line-height: 1.7;
+        }
+
+
+        .tags {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 10px;
+
+            margin-top: 28px;
+        }
+
+
+        .tag {
+
+            display: inline-block;
+
+            padding: 10px 14px;
+
+            background-color: var(--card-background);
+
+            color: var(--text-main);
+
+            border: 1px solid var(--border);
+
+            border-radius: 999px;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            box-shadow: 0 2px 4px var(--shadow);
+        }
+
+
+
+        /* =========================================================
+           GENERAL SECTIONS
+           ========================================================= */
+
+        .project-section {
+            padding-top: 65px;
+        }
+
+
+        .project-section > h2 {
+
+            margin-top: 0;
+            margin-bottom: 14px;
+
+            color: var(--accent);
+
+            font-size: 40px;
+        }
+
+
+        .section-intro {
+
+            max-width: 900px;
+
+            margin-top: 0;
+            margin-bottom: 28px;
+
+            color: var(--text-secondary);
+
+            font-size: 18px;
+
+            line-height: 1.7;
+        }
+
+
+
+        /* =========================================================
+           CARDS
+           ========================================================= */
+
+        .info-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 20px;
+        }
+
+
+        .info-card {
+
+            padding: 28px;
+
+            background-color: var(--card-background);
+
+            border: 1px solid var(--border);
+
+            border-radius: 10px;
+
+            box-shadow: 0 2px 5px var(--shadow);
+
+            transition:
+                transform 0.20s ease,
+                background-color 0.20s ease,
+                box-shadow 0.20s ease;
+        }
+
+
+        .info-card:hover {
+
+            transform: translateY(-3px);
+
+            background-color: var(--card-hover);
+
+            box-shadow: 0 5px 12px var(--shadow);
+        }
+
+
+        .info-card h3 {
+
+            margin-top: 0;
+            margin-bottom: 12px;
+
+            color: var(--accent);
+
+            font-size: 24px;
+        }
+
+
+        .info-card p,
+        .info-card li {
+
+            color: var(--text-secondary);
+
+            font-size: 16px;
+
+            line-height: 1.65;
+        }
+
+
+        .info-card ul {
+
+            margin-bottom: 0;
+
+            padding-left: 22px;
+        }
+
+
+
+        /* =========================================================
+           ARCHITECTURE IMAGES
+           ========================================================= */
+
+        .architecture-card {
+
+            margin-top: 28px;
+
+            padding: 24px;
+
+            background-color: var(--card-background);
+
+            border: 1px solid var(--border);
+
+            border-radius: 10px;
+
+            box-shadow: 0 3px 10px var(--shadow);
+        }
+
+
+        .architecture-card h3 {
+
+            margin-top: 0;
+            margin-bottom: 10px;
+
+            color: var(--accent);
+
+            font-size: 25px;
+        }
+
+
+        .architecture-card p {
+
+            margin-top: 0;
+
+            color: var(--text-secondary);
+
+            font-size: 16px;
+
+            line-height: 1.65;
+        }
+
+
+        .architecture-image {
+
+            display: block;
+
+            width: 100%;
+            height: auto;
+
+            margin-top: 20px;
+
+            background-color: white;
+
+            border: 1px solid var(--border);
+
+            border-radius: 8px;
+        }
+
+
+
+        /* =========================================================
+           PIPELINE STRIP
+           ========================================================= */
+
+        .pipeline-strip {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(5, 1fr);
+
+            gap: 10px;
+
+            margin-top: 28px;
+        }
+
+
+        .pipeline-stage {
+
+            padding: 22px 12px;
+
+            background-color: var(--card-background);
+
+            border: 1px solid var(--border);
+            border-top: 5px solid var(--accent);
+
+            border-radius: 8px;
+
+            text-align: center;
+
+            box-shadow: 0 2px 5px var(--shadow);
+        }
+
+
+        .pipeline-stage strong {
+
+            display: block;
+
+            margin-bottom: 5px;
+
+            color: var(--accent);
+
+            font-size: 20px;
+        }
+
+
+        .pipeline-stage span {
+
+            color: var(--text-secondary);
+
+            font-size: 14px;
+        }
+
+
+
+        /* =========================================================
+           BRANCH PREDICTOR
+           ========================================================= */
+
+        .predictor-box {
+
+            margin-top: 28px;
+
+            padding: 30px;
+
+            background-color: var(--card-background);
+
+            border: 1px solid var(--border);
+            border-left: 5px solid var(--accent);
+
+            border-radius: 10px;
+
+            box-shadow: 0 2px 5px var(--shadow);
+        }
+
+
+        .predictor-box h3 {
+
+            margin-top: 0;
+            margin-bottom: 14px;
+
+            color: var(--accent);
+
+            font-size: 26px;
+        }
+
+
+        .predictor-box p {
+
+            color: var(--text-secondary);
+
+            font-size: 17px;
+
+            line-height: 1.7;
+        }
+
+
+        .predictor-states {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, minmax(0, 1fr));
+
+            gap: 12px;
+
+            margin-top: 24px;
+        }
+
+
+        .predictor-state {
+
+            padding: 18px 12px;
+
+            background-color: var(--background);
+
+            border: 1px solid var(--border);
+
+            border-radius: 8px;
+
+            text-align: center;
+        }
+
+
+        .predictor-state strong {
+
+            display: block;
+
+            margin-bottom: 7px;
+
+            color: var(--accent);
+
+            font-size: 20px;
+        }
+
+
+        .predictor-state span {
+
+            display: block;
+
+            color: var(--text-secondary);
+
+            font-size: 14px;
+
+            line-height: 1.4;
+        }
+
+
+        .predictor-rule {
+
+            margin-top: 20px;
+
+            padding: 18px;
+
+            background-color: var(--background);
+
+            border: 1px solid var(--border);
+
+            border-radius: 8px;
+
+            color: var(--text-secondary);
+
+            font-size: 16px;
+
+            line-height: 1.65;
+        }
+
+
+
+        /* =========================================================
+           CACHE DEVELOPMENT
+           ========================================================= */
+
+        .cache-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 20px;
+
+            margin-top: 28px;
+        }
+
+
+        .cache-card {
+
+            padding: 28px;
+
+            background-color: var(--card-background);
+
+            border: 1px solid var(--border);
+
+            border-radius: 10px;
+
+            box-shadow: 0 2px 5px var(--shadow);
+        }
+
+
+        .cache-card h3 {
+
+            margin-top: 0;
+            margin-bottom: 12px;
+
+            color: var(--accent);
+
+            font-size: 25px;
+        }
+
+
+        .cache-card p,
+        .cache-card li {
+
+            color: var(--text-secondary);
+
+            font-size: 16px;
+
+            line-height: 1.65;
+        }
+
+
+        .cache-card ul {
+            padding-left: 22px;
+        }
+
+
+        .metric {
+
+            margin-top: 18px;
+
+            padding: 15px;
+
+            background-color: var(--background);
+
+            border: 1px solid var(--border);
+
+            border-radius: 8px;
+        }
+
+
+        .metric strong {
+            color: var(--accent);
+        }
+
+
+
+        /* =========================================================
+           DOWNLOADS
+           ========================================================= */
+
+        .download-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 16px;
+
+            margin-top: 28px;
+        }
+
+
+        .download-button {
+
+            display: block;
+
+            padding: 18px 20px;
+
+            background-color: var(--card-background);
+
+            color: var(--accent);
+
+            border: 1px solid var(--border);
+
+            border-radius: 8px;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            box-shadow: 0 2px 4px var(--shadow);
+
+            transition:
+                background-color 0.20s ease,
+                color 0.20s ease,
+                border-color 0.20s ease,
+                transform 0.20s ease;
+        }
+
+
+        .download-button:hover {
+
+            background-color: var(--accent);
+
+            color: white;
+
+            border-color: var(--accent);
+
+            transform: translateY(-2px);
+        }
+
+
+        .download-button small {
+
+            display: block;
+
+            margin-top: 5px;
+
+            color: var(--text-muted);
+
+            font-weight: normal;
+        }
+
+
+        .download-button:hover small {
+            color: white;
+        }
+
+
+
+        /* =========================================================
+           BOTTOM NAV
+           ========================================================= */
+
+        .bottom-nav {
+
+            margin-top: 70px;
+
+            padding-top: 30px;
+
+            border-top: 1px solid var(--border);
+        }
+
+
+        .bottom-button {
+
+            display: inline-block;
+
+            padding: 14px 22px;
+
+            background-color: var(--card-background);
+
+            color: var(--accent);
+
+            border: 1px solid var(--border);
+
+            border-radius: 7px;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            box-shadow: 0 2px 4px var(--shadow);
+        }
+
+
+        .bottom-button:hover {
+
+            background-color: var(--accent);
+
+            color: white;
+
+            border-color: var(--accent);
+        }
+
+
+
+        /* =========================================================
+           MOBILE
+           ========================================================= */
+
+        @media (max-width: 850px) {
+
+
+            .project-sidebar {
+
+                position: relative;
+
+                width: 100%;
+
+                height: auto;
+
+                padding: 30px;
+
+                border-right: none;
+
+                border-bottom: 1px solid var(--border);
+            }
+
+
+            .project-buttons {
+
+                display: grid;
+
+                grid-template-columns:
+                    repeat(auto-fit, minmax(150px, 1fr));
+            }
+
+
+            .project-button:hover {
+                transform: none;
+            }
+
+
+            .main-content {
+                margin-left: 0;
+            }
+
+
+            .page-shell {
+                padding: 55px 30px 80px 30px;
+            }
+
+
+            .project-header h1 {
+                font-size: 44px;
+            }
+
+
+            .project-header h2 {
+                font-size: 23px;
+            }
+
+
+            .info-grid,
+            .cache-grid,
+            .download-grid {
+                grid-template-columns: 1fr;
+            }
+
+
+            .pipeline-strip {
+                grid-template-columns: 1fr;
+            }
+
+
+            .predictor-states {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+
+    </style>
+
+</head>
+
+
+
+<body>
+
+
+    <!-- =========================================================
+         LEFT SIDEBAR
+         ========================================================= -->
+
+    <aside class="project-sidebar">
+
+
+        <h2>
+            Projects
+        </h2>
+
+
+        <nav class="project-buttons">
+
+
+            <a
+                class="project-button"
+                href="index.html"
+            >
+                RISC-V MCU
+            </a>
+
+
+            <a
+                class="project-button"
+                href="../serdes/index.html"
+            >
+                SerDes Labs
+            </a>
+
+
+            <a
+                class="project-button"
+                href="../fpga/index.html"
+            >
+                FPGA DFX
+            </a>
+
+
+            <a
+                class="project-button"
+                href="../come_to_papa/index.html"
+            >
+                Come to Pawpa
+            </a>
+
+
+            <a
+                class="project-button"
+                href="../../index.html"
+            >
+                ← Home
+            </a>
+
+
+        </nav>
+
+
+    </aside>
+
+
+
+    <!-- =========================================================
+         MAIN CONTENT
+         ========================================================= -->
+
+    <main class="main-content">
+
+
+        <div class="page-shell">
+
+
+            <!-- =================================================
+                 HEADER
+                 ================================================= -->
+
+            <header class="project-header">
+
+
+                <h1>
+                    RISC-V OTTER MCU
+                </h1>
+
+
+                <h2>
+                    5-stage pipelined processor with hazard handling,
+                    dynamic branch prediction, caches, and FPGA verification
+                </h2>
+
+
+                <p>
+
+                    This project extends the Cal Poly OTTER RISC-V MCU into a
+                    pipelined processor implemented in SystemVerilog and tested
+                    on a Basys 3 FPGA. The design grew from the original OTTER
+                    datapath into a 5-stage IF / DE / EX / MEM / WB pipeline
+                    with forwarding, stalls, flushes, a 2-bit dynamic branch
+                    predictor, instruction and data cache work, and additional
+                    ISA functionality.
+
+                </p>
+
+
+                <p>
+
+                    My work focused heavily on computer architecture design,
+                    pipeline control, cache behavior, debugging, simulation,
+                    and hardware verification.
+
+                </p>
+
+
+                <div class="tags">
+
+                    <span class="tag">RISC-V</span>
+                    <span class="tag">SystemVerilog</span>
+                    <span class="tag">5-Stage Pipeline</span>
+                    <span class="tag">2-bit Branch Predictor</span>
+                    <span class="tag">Hazard Handling</span>
+                    <span class="tag">Caches</span>
+                    <span class="tag">Vivado</span>
+                    <span class="tag">Basys 3</span>
+                    <span class="tag">Computer Architecture</span>
+
+                </div>
+
+
+            </header>
+
+
+
+            <!-- =================================================
+                 ARCHITECTURE EVOLUTION
+                 ================================================= -->
+
+            <section class="project-section">
+
+
+                <h2>
+                    Architecture Evolution
+                </h2>
+
+
+                <p class="section-intro">
+
+                    The starting OTTER MCU is a single-datapath RISC-V design
+                    containing the PC, register file, ALU, memory, immediate
+                    generation, branch logic, CSR support, and memory-mapped
+                    I/O. The project then reorganizes this functionality into
+                    a five-stage pipeline so multiple instructions can be in
+                    flight at the same time.
+
+                </p>
+
+
+                <div class="architecture-card">
+
+
+                    <h3>
+                        Original OTTER MCU Architecture
+                    </h3>
+
+
+                    <p>
+
+                        The original architecture provides the major datapath
+                        building blocks that the pipelined design is built from.
+
+                    </p>
+
+
+                    <img
+                        class="architecture-image"
+                        src="images/otter_mcu_architecture.png"
+                        alt="Original RISC-V OTTER MCU architecture diagram"
+                    >
+
+
+                </div>
+
+
+                <div class="architecture-card">
+
+
+                    <h3>
+                        OTTER 5-Stage Pipeline
+                    </h3>
+
+
+                    <p>
+
+                        The pipelined architecture separates instruction work
+                        into Fetch, Decode, Execute, Memory, and Writeback.
+                        Pipeline registers separate each stage and allow
+                        multiple instructions to progress concurrently.
+
+                    </p>
+
+
+                    <div class="pipeline-strip">
+
+                        <div class="pipeline-stage">
+                            <strong>IF</strong>
+                            <span>Fetch</span>
+                        </div>
+
+                        <div class="pipeline-stage">
+                            <strong>DE</strong>
+                            <span>Decode</span>
+                        </div>
+
+                        <div class="pipeline-stage">
+                            <strong>EX</strong>
+                            <span>Execute</span>
+                        </div>
+
+                        <div class="pipeline-stage">
+                            <strong>MEM</strong>
+                            <span>Memory</span>
+                        </div>
+
+                        <div class="pipeline-stage">
+                            <strong>WB</strong>
+                            <span>Writeback</span>
+                        </div>
+
+                    </div>
+
+
+                    <img
+                        class="architecture-image"
+                        src="images/otter_pipeline_architecture.png"
+                        alt="OTTER five stage pipeline architecture"
+                    >
+
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- =================================================
+                 HAZARD HANDLING
+                 ================================================= -->
+
+            <section class="project-section">
+
+
+                <h2>
+                    Pipeline Hazards and Control
+                </h2>
+
+
+                <p class="section-intro">
+
+                    Pipelining improves throughput, but it also creates data
+                    and control hazards. The CARP pipeline therefore includes
+                    a dedicated hazard unit that coordinates forwarding,
+                    stalls, register-write control, pipeline flushes, and
+                    branch recovery.
+
+                </p>
+
+
+                <div class="info-grid">
+
+
+                    <article class="info-card">
+
+                        <h3>
+                            Data Hazards
+                        </h3>
+
+                        <p>
+
+                            Forwarding paths allow newer pipeline stages to
+                            feed results back toward Execute without waiting
+                            for every value to reach Writeback. Load-use cases
+                            that cannot be solved with forwarding require a
+                            pipeline stall.
+
+                        </p>
+
+                    </article>
+
+
+                    <article class="info-card">
+
+                        <h3>
+                            Control Hazards
+                        </h3>
+
+                        <p>
+
+                            Branches, JAL, and JALR can redirect the PC. When a
+                            predicted path is incorrect, younger instructions
+                            are flushed and execution resumes from the recovery
+                            PC.
+
+                        </p>
+
+                    </article>
+
+
+                </div>
+
+
+                <div class="architecture-card">
+
+                    <h3>
+                        CARP Pipeline, Branch Predictor, and Hazard Unit
+                    </h3>
+
+                    <p>
+
+                        This diagram shows the full pipeline organization with
+                        the branch predictor and hazard unit integrated beneath
+                        the main datapath.
+
+                    </p>
+
+                    <img
+                        class="architecture-image"
+                        src="images/carp_pipeline_hazard_branch_predictor.png"
+                        alt="CARP pipelined OTTER with branch predictor and hazard unit"
+                    >
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- =================================================
+                 2 BIT BRANCH PREDICTOR
+                 ================================================= -->
+
+            <section class="project-section">
+
+
+                <h2>
+                    2-Bit Dynamic Branch Predictor
+                </h2>
+
+
+                <p class="section-intro">
+
+                    A branch predictor reduces the number of times the pipeline
+                    has to wait for a conditional branch to reach its resolve
+                    point. Instead of treating every branch as completely
+                    unknown, the processor remembers recent branch behavior and
+                    predicts the likely next PC.
+
+                </p>
+
+
+                <div class="predictor-box">
+
+
+                    <h3>
+                        2-Bit Saturating Counter
+                    </h3>
+
+
+                    <p>
+
+                        Each prediction uses a 2-bit state. Two states predict
+                        not-taken and two states predict taken. A single unusual
+                        branch result therefore does not immediately reverse a
+                        strongly established prediction.
+
+                    </p>
+
+
+                    <div class="predictor-states">
+
+                        <div class="predictor-state">
+                            <strong>00</strong>
+                            <span>Strongly<br>Not Taken</span>
+                        </div>
+
+                        <div class="predictor-state">
+                            <strong>01</strong>
+                            <span>Weakly<br>Not Taken</span>
+                        </div>
+
+                        <div class="predictor-state">
+                            <strong>10</strong>
+                            <span>Weakly<br>Taken</span>
+                        </div>
+
+                        <div class="predictor-state">
+                            <strong>11</strong>
+                            <span>Strongly<br>Taken</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="predictor-rule">
+
+                        <strong>Update rule:</strong>
+                        taken branches move the state toward <strong>11</strong>;
+                        not-taken branches move it toward <strong>00</strong>.
+                        The counter saturates at either end. The upper bit can
+                        be used as the taken / not-taken prediction.
+
+                    </div>
+
+
+                    <div class="predictor-rule">
+
+                        <strong>Misprediction recovery:</strong>
+                        when the actual branch result disagrees with the
+                        prediction, the hazard / recovery logic redirects the
+                        PC and flushes instructions fetched from the wrong path.
+                        The predictor state is then updated using the actual
+                        result.
+
+                    </div>
+
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- =================================================
+                 CACHE DEVELOPMENT
+                 ================================================= -->
+
+            <section class="project-section">
+
+
+                <h2>
+                    Cache Development
+                </h2>
+
+
+                <p class="section-intro">
+
+                    The processor project also explored instruction and data
+                    caches. These additions required more than just storage:
+                    cache misses had to interact correctly with the PC,
+                    pipeline registers, jumps, branches, and writeback logic.
+
+                </p>
+
+
+                <div class="cache-grid">
+
+
+                    <article class="cache-card">
+
+                        <h3>
+                            Direct-Mapped Instruction Cache
+                        </h3>
+
+                        <ul>
+                            <li>16 cache blocks</li>
+                            <li>8 words per block</li>
+                            <li>Miss FSM stalls the PC while refilling</li>
+                            <li>Special handling for JAL / JALR cache misses</li>
+                            <li>Branch-flush priority during redirect misses</li>
+                        </ul>
+
+                        <div class="metric">
+
+                            <strong>Documented TestAll result:</strong><br>
+                            16,459 cycles / 329,210 ns
+
+                        </div>
+
+                        <div class="metric">
+
+                            Baseline pipelined design:<br>
+                            13,799 cycles / 276,010 ns<br><br>
+                            The report measured this cache version at about
+                            19% slower on TestAll because the implementation
+                            added miss penalties without enough locality to
+                            recover that overhead on this workload.
+
+                        </div>
+
+                    </article>
+
+
+                    <article class="cache-card">
+
+                        <h3>
+                            4-Way Set-Associative Data Cache
+                        </h3>
+
+                        <ul>
+                            <li>4-way set associativity</li>
+                            <li>4 words per block</li>
+                            <li>Write-back behavior</li>
+                            <li>Valid and dirty state</li>
+                            <li>Dedicated data-cache FSM</li>
+                            <li>Pipeline freeze during miss servicing</li>
+                        </ul>
+
+                        <p>
+
+                            The included Lab 6 report documents an intermediate
+                            version of this cache that used a rotating pointer
+                            per set as its replacement policy. That milestone
+                            was useful for validating set / way addressing and
+                            writeback behavior before moving toward more
+                            advanced replacement logic.
+
+                        </p>
+
+                    </article>
+
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- =================================================
+                 PROCESSOR FEATURES
+                 ================================================= -->
+
+            <section class="project-section">
+
+
+                <h2>
+                    Processor Features
+                </h2>
+
+
+                <div class="info-grid">
+
+
+                    <article class="info-card">
+
+                        <h3>
+                            Integer Pipeline
+                        </h3>
+
+                        <p>
+
+                            Five-stage RISC-V execution with register
+                            forwarding, load-use stalls, control-hazard flushes,
+                            and memory-mapped I/O.
+
+                        </p>
+
+                    </article>
+
+
+                    <article class="info-card">
+
+                        <h3>
+                            M Extension
+                        </h3>
+
+                        <p>
+
+                            Integer multiply / divide support extends the base
+                            integer datapath for workloads that would otherwise
+                            require multi-instruction software routines.
+
+                        </p>
+
+                    </article>
+
+
+                    <article class="info-card">
+
+                        <h3>
+                            Floating-Point Work
+                        </h3>
+
+                        <p>
+
+                            The project includes floating-point functionality
+                            as part of the broader effort to expand the OTTER
+                            into a more capable RISC-V microcomputer.
+
+                        </p>
+
+                    </article>
+
+
+                    <article class="info-card">
+
+                        <h3>
+                            FPGA Verification
+                        </h3>
+
+                        <p>
+
+                            The design was tested through simulation and on a
+                            Basys 3 FPGA using programs such as TestAll and a
+                            matrix-multiplication workload.
+
+                        </p>
+
+                    </article>
+
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- =================================================
+                 VERIFICATION
+                 ================================================= -->
+
+            <section class="project-section">
+
+
+                <h2>
+                    Verification and Debugging
+                </h2>
+
+
+                <p class="section-intro">
+
+                    Much of the engineering work on the project was in the
+                    interaction between features. A cache or branch predictor
+                    can work correctly in isolation and still fail when a
+                    branch redirect, stall, flush, or cache miss occurs on the
+                    same cycle. The design was therefore tested at both the
+                    module and full-processor level.
+
+                </p>
+
+
+                <div class="info-grid">
+
+
+                    <article class="info-card">
+
+                        <h3>
+                            TestAll
+                        </h3>
+
+                        <p>
+
+                            The processor used a broad RISC-V assembly test
+                            program to exercise arithmetic, branches, jumps,
+                            memory accesses, and other instruction behavior.
+
+                        </p>
+
+                    </article>
+
+
+                    <article class="info-card">
+
+                        <h3>
+                            Matrix Workload
+                        </h3>
+
+                        <p>
+
+                            A larger machine-code image is included with this
+                            page as an example workload / memory image used for
+                            processor validation.
+
+                        </p>
+
+                    </article>
+
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- =================================================
+                 DOWNLOADS
+                 ================================================= -->
+
+            <section class="project-section">
+
+
+                <h2>
+                    Project Documents and Artifacts
+                </h2>
+
+
+                <p class="section-intro">
+
+                    These are the original architecture diagrams, cache reports,
+                    and test artifact used to build this project page.
+
+                </p>
+
+
+                <div class="download-grid">
+
+
+                    <a
+                        class="download-button"
+                        href="docs/OTTR_architecture_Color.pdf"
+                        target="_blank"
+                    >
+                        Original OTTER MCU Architecture ↗
+                        <small>PDF</small>
+                    </a>
+
+
+                    <a
+                        class="download-button"
+                        href="docs/Otter_arch_v3.0.pdf"
+                        target="_blank"
+                    >
+                        OTTER Pipeline Architecture V3.0 ↗
+                        <small>PDF</small>
+                    </a>
+
+
+                    <a
+                        class="download-button"
+                        href="docs/CPE333_Lab5_Direct_Mapped_Cache.pdf"
+                        target="_blank"
+                    >
+                        Lab 5 - Direct-Mapped I-Cache ↗
+                        <small>PDF</small>
+                    </a>
+
+
+                    <a
+                        class="download-button"
+                        href="docs/CPE333_Lab6_Set_Associative_Cache.pdf"
+                        target="_blank"
+                    >
+                        Lab 6 - Set-Associative D-Cache ↗
+                        <small>PDF</small>
+                    </a>
+
+
+                    <a
+                        class="download-button"
+                        href="files/Fiftyx50.txt"
+                        download
+                    >
+                        Download Fiftyx50 Machine Code
+                        <small>TXT / hexadecimal memory image</small>
+                    </a>
+
+
+                    <a
+                        class="download-button"
+                        href="images/carp_pipeline_hazard_branch_predictor.svg"
+                        target="_blank"
+                    >
+                        CARP Pipeline + Hazard Diagram ↗
+                        <small>SVG</small>
+                    </a>
+
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- =================================================
+                 BOTTOM NAV
+                 ================================================= -->
+
+            <div class="bottom-nav">
+
+
+                <a
+                    class="bottom-button"
+                    href="../../index.html"
+                >
+                    ← Back to Home
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+
+    </main>
+
+
+</body>
+
+</html>
